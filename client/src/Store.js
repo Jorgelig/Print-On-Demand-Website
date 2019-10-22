@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import './App.css';
 class Store extends Component {
-  state = {data:""}
+  constructor(){
+    super();
+
+    this.state={
+      data:""
+    }
+  }
 
   async componentDidMount() {
-    const response = await fetch('/test')
-    const data   = await response.json()
-    this.setState({data: data})
-  }
+    const response = await fetch('/store');
+    const store   = await response.json();
+    console.log(store);
+    this.setState({data: store});
+    console.log(this.state.data)
+  };
   render() {
     return (
       <div>
         <h1>Store</h1>
-        <p>{this.state.data}</p>
+        <p>{JSON.stringify(this.state.data)}</p>
       </div>
     );
   }
