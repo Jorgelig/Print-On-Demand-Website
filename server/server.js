@@ -16,8 +16,10 @@ app.use(staticFiles);
 
 //contact printful here && global variables
 
-var storeData = {};
+var storeData;
+var variantData;
 
+//this is the main configuration for the printful website
 //const proxyurl = "https://cors-anywhere.herokuapp.com/";
 const url = 'https://api.printful.com/';
 const apikey = Buffer.from("pxtgyt89-v2pd-q1o9:j8pj-hkqhi8s06pw1").toString('base64');
@@ -27,8 +29,9 @@ const config ={
       'Authorization':"Basic "+ apikey,
     }
 }
+//end of main setup
 
-
+//this axios call if for the base products
 axios.get(url + "sync/products", config)
   .then(function(response){
       console.log(response)
@@ -39,7 +42,27 @@ axios.get(url + "sync/products", config)
   })
   .finally(function(){
       console.log("made a get request!")
+      getVariantInfo();
   })
+
+function getVariantInfo(){
+  let storeItems = storeData.data.result;
+  let promises = []
+  
+  storeItems.forEach(element => {
+    let address = url + "sync/products/" + element.id;
+    promises.push(axios.get(address, config))
+  });
+
+  axios.all(promises).then(function(results){
+    variantData = results;
+    console.log(variantData);
+  })
+  .catch(function(error){
+    console.log(error);
+  })
+
+}
 //end of contact
 
 //routes here
