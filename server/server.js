@@ -31,37 +31,43 @@ const config ={
 }
 //end of main setup
 
-//this axios call if for the base products
+//this axios call is for the base products
 axios.get(url + "sync/products", config)
   .then(function(response){
-      console.log(response)
+      //console.log(response)
       storeData = response;
+      getVariantInfo();
   })
   .catch(function(error){
       console.log(error)
   })
   .finally(function(){
       console.log("made a get request!")
-      getVariantInfo();
   })
 
 function getVariantInfo(){
   let storeItems = storeData.data.result;
   let promises = []
-  
+
   storeItems.forEach(element => {
     let address = url + "sync/products/" + element.id;
     promises.push(axios.get(address, config))
   });
-
-  axios.all(promises).then(function(results){
-    variantData = results;
+  
+  Promise.all(promises).then(function(results){
+    variantData = [];
+    //results[0].data//.result.sync_variants;
+    for(let i =0; i < results.length; i ++){
+      if(results[i].data.code == 200){
+      variantData.push(results[i].data.result);
+      }
+      else{ variantData.push(undefined)}
+    }
     console.log(variantData);
   })
   .catch(function(error){
     console.log(error);
   })
-
 }
 //end of contact
 
@@ -72,8 +78,13 @@ router.get('/test', (req,res)=>{
 });
 
 router.get('/store', (req,res)=>{
-  res.send(storeData.data);
+  let data = {
+    storeData: storeData.data,
+    variantData: variantData
+  }
+  res.send(data);
 })
+
 
 //end of routes
 

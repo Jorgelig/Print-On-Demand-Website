@@ -5,22 +5,25 @@ class Store extends Component {
     super();
 
     this.state={
-      data:""
+      storeData:"",
+      variantData:""//added to hold all information on all varients of the items in the store for the item page
     }
   }
 
   async componentDidMount() {
-    const response = await fetch('/store');
-    const store   = await response.json();
-    console.log(store);
-    this.setState({data: store});
-    console.log(this.state.data)
+    let response = await fetch('/store');
+    let data   = await response.json();
+    console.log(data);
+    this.setState({storeData: data.storeData});
+    console.log(this.state.storeData);
+    this.setState({variantData: data.variantData});
+    console.log(this.state.variantData);
   };
   render() {
     return (
       <div>
         <h1>Store</h1>
-        <p>{JSON.stringify(this.state.data)}</p>
+        <p>{JSON.stringify(this.state.storeData)}</p>
       </div>
     );
   }
