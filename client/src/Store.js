@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
+
+import StoreItems from "./components/StoreItems.js"
+
 class Store extends Component {
   constructor(){
     super();
@@ -24,6 +27,7 @@ class Store extends Component {
       <div>
         <h1>Store</h1>
         <p>{JSON.stringify(this.state.storeData)}</p>
+          <StoreItems storeData={this.state.storeData.result} />
       </div>
     );
   }
