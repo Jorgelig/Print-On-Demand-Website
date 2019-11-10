@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
+import {Route} from 'react-router-dom';
 
 import StoreItems from "./components/StoreItems.js"
+import ItemPage from "./ItemPage.js";
 
 class Store extends Component {
   constructor(){
@@ -25,9 +27,16 @@ class Store extends Component {
   render() {
     return (
       <div>
-        <h1>Store</h1>
-        <p>{JSON.stringify(this.state.storeData)}</p>
-          <StoreItems storeData={this.state.storeData.result} />
+        <Route exact path ='/Store'>
+          <div>
+            <h1>Store</h1>
+            <p>{JSON.stringify(this.state.storeData)}</p>
+              <StoreItems storeData={this.state.storeData.result} />
+          </div>
+        </Route>
+        <Route path ='/Store/ItemPage/:Item'>
+          <ItemPage storeData={this.state.storeData.result}/>
+        </Route>
       </div>
     );
   }
