@@ -35,7 +35,7 @@ class Store extends Component {
           </div>
         </Route>
         <Route path ='/Store/ItemPage/:Item'>
-          <ItemPage storeData={this.state.storeData.result}/>
+          <ItemPage storeData={this.state.variantData}/>
         </Route>
       </div>
     );
