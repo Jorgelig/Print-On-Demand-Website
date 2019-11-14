@@ -21,7 +21,7 @@ function ItemPage(props){
     
     for(let i = 0; i < props.storeData.length; i ++){
         if(replaceDashes(Item) === props.storeData[i].sync_product.name.toLowerCase()){
-            itemObj = props.storeData[i]
+            itemObj = props.storeData[i];
         }
     }
     console.log(itemObj)
@@ -29,7 +29,7 @@ function ItemPage(props){
     if (itemObj){
         return(
             <div>                
-                <h1>{Item}</h1>
+                <h1>{replaceDashes(Item)}</h1>
                 <img src={itemObj.sync_variants[count].files[1].preview_url} alt={itemObj.sync_variants[count].name} />
                 <p>{itemObj.sync_variants[count].name}</p>
                 <button onClick={
