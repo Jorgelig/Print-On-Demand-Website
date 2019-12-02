@@ -32,6 +32,13 @@ function ItemPage(props){
                 <h1>{replaceDashes(Item)}</h1>
                 <img src={itemObj.sync_variants[count].files[1].preview_url} alt={itemObj.sync_variants[count].name} />
                 <p>{itemObj.sync_variants[count].name}</p>
+                <p>PRICE: {itemObj.sync_variants[count].retail_price}</p>
+                <button onClick={
+                    function(){
+                        console.log(JSON.stringify(itemObj.sync_variants[count].name+"... added to cart!?"));
+                        props.addToCart(itemObj.sync_variants[count])
+                    }
+                }>ADD TO CART</button>
                 <button onClick={
                     function(){
                         if(count > 0){
